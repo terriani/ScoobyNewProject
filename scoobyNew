@@ -17,7 +17,7 @@ echo "\033[1;90m Por favor informa a senha do seu usuário para configuração d
 shell_exec('sudo chmod 777 -R ScoobyPHP');
 $siteName = file_get_contents('ScoobyPHP/App/Config/config.php');
 $siteName = strtr($siteName, ['ScoobyPHP' => $name]);
-$f = fopen("ScoobyPHP/Config/config.php", 'w+');
+$f = fopen("ScoobyPHP/App/Config/config.php", 'w+');
 fwrite($f, $siteName);
 fclose($f);
 echo "\033[1;90m $name criado em 'App/Models' com sucesso. \033[0;97m \r\n";
