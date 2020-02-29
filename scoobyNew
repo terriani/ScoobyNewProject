@@ -15,7 +15,7 @@ shell_exec('git clone https://github.com/terriani/ScoobyPHP.git');
 echo "\r\n";
 echo "\033[1;90m Por favor informa a senha do seu usuário para configuração do cache da aplicação... \033[1;97m \r\n";
 shell_exec('sudo chmod 777 -R ScoobyPHP');
-$siteName = file_get_contents('ScoobyPHP/Config/config.php');
+$siteName = file_get_contents('ScoobyPHP/App/Config/config.php');
 $siteName = strtr($siteName, ['ScoobyPHP' => $name]);
 $f = fopen("ScoobyPHP/Config/config.php", 'w+');
 fwrite($f, $siteName);
