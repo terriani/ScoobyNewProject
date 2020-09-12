@@ -1,0 +1,38 @@
+<?php
+if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+    die('Instalador do ScoobyPHP, só pode ser executado em linha de comando');
+}
+if (empty($argv[1])) {
+    echo "\r\n";
+    echo "\033[1;96mBem vindo a instalação do ScoobyPHP... \033[0;97m \r\n";
+    echo "Por favor informe o nome do seu novo projeto!\r\n -> ";
+    $name = fgets(STDIN);
+} else {
+    $name = $argv[1];
+}
+$name = strip_tags(rtrim($name));
+echo "\r\n";
+echo "\033[1;96mClonando o repositório do github... \033[0;97m \r\n";
+shell_exec('git clone https://github.com/terriani/ScoobyPHP.git');
+echo "\r\n";
+echo "\033[1;96mPor favor informe a senha do seu usuário... \033[1;97m \r\n";
+shell_exec('sudo chmod 777 -R ScoobyPHP');
+$siteName = file_get_contents('ScoobyPHP/.env');
+$siteName = strtr($siteName, ["APP_NAME=''" => "APP_NAME='$name'"]);
+$f = fopen("ScoobyPHP/.env", 'w+');
+fwrite($f, $siteName);
+fclose($f);
+echo "\033[1;96m{$name} criado com sucesso. \033[0;97m \r\n";
+shell_exec('mv ScoobyPHP '. $name);
+chdir($name);
+echo "\033[1;96mInstalando os pacotes via composer... \033[0;97m \r\n";
+shell_exec('composer update');
+echo "\r\n";
+echo "\033[1;96mInstalando os pacotes via npm...\033[0;97m \r\n";
+shell_exec('npm install');
+sleep(0.2);
+shell_exec('rm -rf .git');
+shell_exec('rm -rf Docs');
+file_put_contents('README.md', '# Crie aqui um README incrível!');
+echo "\033[1;97mScoobyPHP instalado com sucesso \033[0;97m \r\n\r\n";
+echo "\033[1;96mFAÇA ALGO INCRÍVEL... \033[0;97m\r\n\r\n";
